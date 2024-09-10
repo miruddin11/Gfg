@@ -6,30 +6,25 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    int dp[1001][1001];
-    int solve(int idx,int target,vector<int> &wt,vector<int> &val)
-    {
-        if(idx==wt.size()){
-            return 0;
-        }
-        if(target==0){
-            return 0;
-        }
-        if(dp[idx][target]!=-1){
-            return dp[idx][target];
-        }
-        int take=INT_MIN,notTake=INT_MIN;
-        if(wt[idx]<=target){
-            take=val[idx]+solve(idx+1,target-wt[idx],wt,val);
-        }
-        notTake=solve(idx+1,target,wt,val);
-        return dp[idx][target]=max(take,notTake);
-    }
     // Function to return max value that can be put in knapsack of capacity W.
     int knapSack(int W, vector<int>& wt, vector<int>& val) {
         // Your code here
-        memset(dp,-1,sizeof(dp));
-        return solve(0,W,wt,val);
+        int n=wt.size();
+        vector<vector<int>> dp(n+1,vector<int>(W+1,0));
+        for(int i=0;i<n+1;i++)
+        {
+            for(int j=0;j<W+1;j++)
+            {
+                if(i==0||j==0) dp[i][j]=0;
+                else if(wt[i-1]<=j){
+                    dp[i][j]=max(val[i-1]+dp[i-1][j-wt[i-1]],dp[i-1][j]);
+                }
+                else{
+                    dp[i][j]=dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][W];
     }
 };
 
