@@ -1,4 +1,4 @@
-<h2><a href="https://www.geeksforgeeks.org/problems/edit-distance3702/1">Edit Distance</a></h2><h3>Difficulty Level : Difficulty: Hard</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 18px;">Given two strings <strong>str1</strong> and <strong>str2. </strong>Return the minimum number of operations required to convert <strong>str1 </strong>to <strong>str2</strong>.<br>The possible operations are permitted:</span></p>
+<h2><a href="https://www.geeksforgeeks.org/problems/edit-distance3702/1?itm_source=geeksforgeeks&itm_medium=article&itm_campaign=practice_card">Edit Distance</a></h2><h3>Difficulty Level : Difficulty: Hard</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 18px;">Given two strings <strong>str1</strong> and <strong>str2. </strong>Return the minimum number of operations required to convert <strong>str1 </strong>to <strong>str2</strong>.<br>The possible operations are permitted:</span></p>
 <ol>
 <li><span style="font-size: 18px;">Insert a character at any position of the string.</span></li>
 <li><span style="font-size: 18px;">Remove any character from the string.</span></li>
