@@ -114,6 +114,7 @@ class Solution {
     }
 };
 
+
 //{ Driver Code Starts.
 
 int main() {
@@ -161,7 +162,10 @@ int main() {
 
         Solution ob;
         Node *res = ob.copyList(head);
-
+        if (res == head) {
+            cout << "false" << endl;
+            continue;
+        }
         if (validation(head, res)) {
             cout << "true" << endl;
         } else {
