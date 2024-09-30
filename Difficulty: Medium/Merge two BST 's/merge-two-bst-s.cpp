@@ -94,32 +94,49 @@ struct Node {
 */
 class Solution {
   public:
-    void fun(Node*root,multiset<int>&s)
-    {
-        if(root==NULL)
-        {
-            return;
-        }
-        s.insert(root->data);
-        fun(root->left,s);
-        fun(root->right,s);
-        
-    }
     // Function to return a list of integers denoting the node
     // values of both the BST in a sorted order.
+    void solve(Node *root,vector<int> &arr)
+    {
+        if(root==NULL){
+            return;
+        }
+        solve(root->left,arr);
+        arr.push_back(root->data);
+        solve(root->right,arr);
+    }
     vector<int> merge(Node *root1, Node *root2) {
         // Your code here
-        vector<int>v;
-        multiset<int>s;
-        fun(root1,s);
-        fun(root2,s);
-        for( auto i = s.begin();i!=s.end();i++)
+        vector<int> a;
+        solve(root1,a);
+        vector<int> b;
+        solve(root2,b);
+        vector<int> ans;
+        int i=0,j=0;
+        int n=a.size(),m=b.size();
+        while(i<n&&j<m)
         {
-            v.push_back(*i);
+            if(a[i]>b[j]){
+                ans.push_back(b[j]);
+                j++;
+            }
+            else{
+                ans.push_back(a[i]);
+                i++;
+            }
         }
-        return v;
+        while(i<n){
+            ans.push_back(a[i]);
+            i++;
+        }
+        while(j<m){
+            ans.push_back(b[j]);
+            j++;
+        }
+        return ans;
     }
 };
+
 
 //{ Driver Code Starts.
 int main() {
