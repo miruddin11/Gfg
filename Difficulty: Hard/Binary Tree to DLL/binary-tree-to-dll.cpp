@@ -159,6 +159,9 @@ int main() {
         Solution ob;
         Node* head = ob.bToDLL(root);
         printList(head);
+
+        cout << "~"
+             << "\n";
     }
     return 0;
 }
