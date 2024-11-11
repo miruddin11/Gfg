@@ -96,51 +96,55 @@ struct Node {
 */
 class Solution {
   public:
-    unordered_map<int,vector<int>> adj;
-    void dfs(Node* root)
+    unordered_map<Node*,Node*> par;
+    int t;
+    Node *start;
+    void solve(Node* root)
     {
-        if(root==NULL){
-            return;
+        if(!root) return;
+        if(root->data==t){
+            start=root;
         }
-        if(root->left!=NULL)
-        {
-            adj[root->left->data].push_back(root->data);
-            adj[root->data].push_back(root->left->data);
-        }
-        if(root->right!=NULL){
-            adj[root->right->data].push_back(root->data);
-            adj[root->data].push_back(root->right->data);
-        }
-        dfs(root->left);
-        dfs(root->right);
+        if(root->left) par[root->left]=root;
+        solve(root->left);
+        if(root->right) par[root->right]=root;
+        solve(root->right);
     }
     int minTime(Node* root, int target) 
     {
         // Your code goes here
-        adj.clear();
-        dfs(root);
-        queue<int> q;
-        q.push(target);
-        unordered_set<int> vis;
-        vis.insert(target);
-        int time=0;
+        t=target;
+        start=NULL;
+        solve(root);
+        queue<Node*> q;
+        q.push(start);
+        unordered_set<Node*> vis;
+        vis.insert(start);
+        int level=0;
         while(!q.empty())
         {
-            int size=q.size();
-            while(size--)
+            int sz=q.size();
+            while(sz--)
             {
-                int curr=q.front();
+                Node* curr=q.front();
                 q.pop();
-                for(auto &nbr:adj[curr]){
-                    if(vis.find(nbr)==vis.end()){
-                        q.push(nbr);
-                        vis.insert(nbr);
-                    }
+                if(curr->left&&vis.count(curr->left)==0){
+                    q.push(curr->left);
+                    vis.insert(curr->left);
+                }
+                if(curr->right&&vis.count(curr->right)==0){
+                    q.push(curr->right);
+                    vis.insert(curr->right);
+                }
+                if(par.find(curr)!=par.end()&&vis.count(par[curr])==0)
+                {
+                    q.push(par[curr]);
+                    vis.insert(par[curr]);
                 }
             }
-            time+=1;
+            level++;
         }
-        return time-1;
+        return level-1;
     }
 };
 
@@ -165,7 +169,9 @@ int main()
 
         cin.ignore();
 
-    }
+    
+cout << "~" << "\n";
+}
 
 
     return 0;
