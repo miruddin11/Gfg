@@ -135,7 +135,9 @@ int main() {
         vector <int> res = ob.bottomView(root);
         for (int i : res) cout << i << " ";
         cout << endl;
-    }
+    
+cout << "~" << "\n";
+}
     return 0;
 }
 
