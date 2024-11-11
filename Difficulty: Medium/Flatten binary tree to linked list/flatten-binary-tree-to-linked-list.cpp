@@ -99,19 +99,24 @@ void inorder(struct Node* root)
 class Solution
 {
     public:
-    Node* prev=NULL;
     void flatten(Node *root)
     {
         //code here
-        if(root==NULL) return;
-        if(prev!=NULL){
-            prev->right=root;
-            prev->left=NULL;
+        while(root)
+        {
+            if(!root->left) root=root->right;
+            else{
+                Node* curr=root->left;
+                while(curr->right)
+                {
+                    curr=curr->right;
+                }
+                curr->right=root->right;
+                root->right=root->left;
+                root->left=NULL;
+                root=root->right;
+            }
         }
-        prev=root;
-        Node* r=root->right;
-        flatten(root->left);
-        flatten(r);
     }
 };
 
@@ -135,7 +140,9 @@ int main() {
 
 
 		cout << "\n";
-	}
+	
+cout << "~" << "\n";
+}
 
 	return 0;
 }
