@@ -6,17 +6,15 @@ using namespace std;
 
 // } Driver Code Ends
 // User function Template for C++
-
 class Solution {
   public:
     // Function to find the sum of contiguous subarray with maximum sum.
-    long long maxSubarraySum(vector<int> &arr) {
+    int maxSubarraySum(vector<int> &arr) {
         // code here...
-        long long currSum=0;
-        long long maxSum=INT_MIN;
-        for(int i=0;i<arr.size();i++)
+        int currSum=0,maxSum=INT_MIN;
+        for(auto &x:arr)
         {
-            currSum+=arr[i];
+            currSum+=x;
             maxSum=max(maxSum,currSum);
             if(currSum<0){
                 currSum=0;
@@ -25,7 +23,6 @@ class Solution {
         return maxSum;
     }
 };
-
 
 //{ Driver Code Starts.
 
