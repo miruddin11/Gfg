@@ -21,6 +21,7 @@ class Solution {
     }
 };
 
+
 //{ Driver Code Starts.
 int main() {
 
@@ -47,6 +48,7 @@ int main() {
         }
 
         cout << endl;
+        cout << "~" << endl;
     }
     return 0;
 }
