@@ -1,6 +1,4 @@
 //{ Driver Code Starts
-// Initial template for C++
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -10,55 +8,77 @@ using namespace std;
 
 class Solution {
   public:
-    // nums: given vector
-    // return the Product vector P that hold product except self at each index
-    vector<long long int> productExceptSelf(vector<long long int>& nums) {
-
+    vector<int> productExceptSelf(vector<int>& arr) {
         // code here
-        int n=nums.size();
-        vector<long long int> ans;
-        long long int p=1ll;
-        long long int zCnt=0;
-        for(auto &x:nums){
-            if(x!=0) p=p*x;
-            else zCnt+=1;
-        }
-        for(int i=0;i<n;i++){
-            if(nums[i]==0){
-                if(zCnt==1) ans.push_back(p);
-                else ans.push_back(0);
-            }else{
-                if(zCnt) ans.push_back(0);
-                else ans.push_back(p/nums[i]);
+        int n = arr.size();
+        vector<int> res(n);
+
+        int product = 1;
+        int zeroCount = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == 0) {
+                zeroCount++;
+            } else {
+                product *= arr[i];
             }
         }
-        return ans;
+
+        if (zeroCount > 1) {
+            return vector<int>(n, 0); // All zeros
+        }
+
+
+        if (zeroCount == 1) {
+            for (int i = 0; i < n; i++) {
+                if (arr[i] == 0) {
+                    res[i] = product;
+                } else {
+                    res[i] = 0;
+                }
+            }
+            return res;
+        }
+
+        for (int i = 0; i < n; i++) {
+            res[i] = product / arr[i];
+        }
+
+        return res;
     }
 };
 
 
 //{ Driver Code Starts.
+
 int main() {
-    int t; // number of test cases
+
+    int t;
     cin >> t;
+    cin.ignore();
+
     while (t--) {
-        int n; // size of the array
-        cin >> n;
-        vector<long long int> arr(n), vec(n);
+        vector<int> arr;
+        string input;
+        getline(cin, input);
+        stringstream ss(input);
+        int number;
 
-        for (int i = 0; i < n; i++) // input the array
-        {
-            cin >> arr[i];
+        while (ss >> number) {
+            arr.push_back(number);
         }
-        Solution obj;
-        vec = obj.productExceptSelf(arr); // function call
 
-        for (int i = 0; i < n; i++) // print the output
-        {
-            cout << vec[i] << " ";
+        Solution obj;
+        vector<int> res = obj.productExceptSelf(arr);
+
+        for (int i = 0; i < res.size(); i++) {
+            cout << res[i] << " ";
         }
         cout << endl;
+        cout << "~\n";
     }
+
     return 0;
 }
+
 // } Driver Code Ends
