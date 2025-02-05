@@ -1,15 +1,14 @@
 //{ Driver Code Starts
-// Initial Template for C++
-
 #include <bits/stdc++.h>
 using namespace std;
 
 /* A binary tree node has data, pointer to left child
    and a pointer to right child */
-struct Node {
+class Node {
+  public:
     int data;
-    struct Node *left;
-    struct Node *right;
+    Node *left;
+    Node *right;
 
     Node(int x) {
         data = x;
@@ -20,14 +19,16 @@ struct Node {
 // Function to Build Tree
 Node *buildTree(string str) {
     // Corner Case
-    if (str.length() == 0 || str[0] == 'N') return NULL;
+    if (str.length() == 0 || str[0] == 'N')
+        return NULL;
 
     // Creating vector of strings from input
-    // string after spliting by space
+    // string after splitting by space
     vector<string> ip;
 
     istringstream iss(str);
-    for (string str; iss >> str;) ip.push_back(str);
+    for (string str; iss >> str;)
+        ip.push_back(str);
 
     // Create the root of the tree
     Node *root = new Node(stoi(ip[0]));
@@ -59,7 +60,8 @@ Node *buildTree(string str) {
 
         // For the right child
         i++;
-        if (i >= ip.size()) break;
+        if (i >= ip.size())
+            break;
         currVal = ip[i];
 
         // If the right child is not null
@@ -77,16 +79,31 @@ Node *buildTree(string str) {
     return root;
 }
 
-/* Helper function to test mirror(). Given a binary
-   search tree, print out its data elements in
-   increasing sorted order.*/
-void inOrder(struct Node *node) {
-    if (node == NULL) return;
+// Generate output as level order of tree
+string levelOrder(Node *root) {
+    if (root == nullptr)
+        return "N\n";
 
-    inOrder(node->left);
-    printf("%d ", node->data);
+    string str;
+    queue<Node *> qq;
+    qq.push(root);
 
-    inOrder(node->right);
+    while (!qq.empty()) {
+        Node *curr = qq.front();
+        qq.pop();
+
+        if (curr == nullptr) {
+            str += "N ";
+            continue;
+        }
+        str += (to_string(curr->data) + " ");
+        qq.push(curr->left);
+        qq.push(curr->right);
+    }
+    while (!str.empty() && !isdigit(str.back())) {
+        str.pop_back();
+    }
+    return str;
 }
 
 
@@ -123,6 +140,7 @@ class Solution {
     }
 };
 
+
 //{ Driver Code Starts.
 
 /* Driver program to test size function*/
@@ -135,10 +153,12 @@ int main() {
         Node *root = buildTree(str);
         Solution ob;
         ob.mirror(root);
-        inOrder(root);
+        cout << levelOrder(root);
         cout << "\n";
+        cout << "~\n";
     }
 
     return 0;
 }
+
 // } Driver Code Ends
