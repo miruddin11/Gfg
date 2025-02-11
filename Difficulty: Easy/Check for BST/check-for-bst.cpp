@@ -17,32 +17,25 @@ struct Node {
 
 
 // } Driver Code Ends
+
+
 class Solution {
   public:
     // Function to check whether a Binary Tree is BST or not.
-    bool bst(Node* root,Node* &temp)
+    bool solve(Node *node,int mn,int mx)
     {
-        if(root==NULL)
-        return true;
-        bool left=bst(root->left,temp);
-        if(left==false)
-        return false;
-        if(temp==NULL || root->data>temp->data)
-        {
-        temp=root;
+        if(node==NULL){
+            return true;
         }
-        else
-        {
-        return false;
+        if(node->data<mn||node->data>mx){
+            return false;
         }
-        bool right=bst(root->right,temp);
-        if(right==false)
-        return false;
-        return true;
+        return solve(node->left,mn,node->data)&&solve(node->right,node->data,mx);
     }
     bool isBST(Node* root) {
-        Node* temp=NULL; 
-        return bst(root,temp);
+        // Your code here
+        int mn=0,mx=1e9;
+        return solve(root,mn,mx);
     }
 };
 
@@ -141,6 +134,7 @@ int main() {
 
         else
             cout << "false\n";
+        cout << "~" << endl;
     }
     return 0;
 }
