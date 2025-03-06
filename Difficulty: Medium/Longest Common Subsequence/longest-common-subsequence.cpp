@@ -1,17 +1,15 @@
 //{ Driver Code Starts
 #include <bits/stdc++.h>
-const int mod = 1e9 + 7;
 using namespace std;
 
 
 // } Driver Code Ends
-// function to find longest common subsequence
 
 class Solution {
   public:
-    // Function to find the length of longest common subsequence in two strings.
-    int lcs(int n, int m, string str1, string str2) {
-        // your code here
+    int lcs(string &str1, string &str2) {
+        // code here
+        int n=str1.size(),m=str2.size();
         vector<vector<int>> dp(n+1,vector<int>(m+1,0));
         for(int i=1;i<=n;i++)
         {
@@ -30,16 +28,17 @@ class Solution {
 };
 
 
+
 //{ Driver Code Starts.
 int main() {
-    int t, n, m;
+    int t;
     cin >> t;
     while (t--) {
-        cin >> n >> m; // Take size of both the strings as input
-        string str1, str2;
-        cin >> str1 >> str2; // Take both the string as input
+        string s1, s2;
+        cin >> s1 >> s2; // Take both the strings as input
         Solution ob;
-        cout << ob.lcs(n, m, str1, str2) << endl;
+        cout << ob.lcs(s1, s2) << endl; // Call the lcs function
+        cout << "~\n";
     }
     return 0;
 }
