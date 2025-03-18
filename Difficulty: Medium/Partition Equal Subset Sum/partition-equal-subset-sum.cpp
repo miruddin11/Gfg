@@ -1,16 +1,15 @@
 //{ Driver Code Starts
-// Initial Template for C++
 
 #include <bits/stdc++.h>
 using namespace std;
 
-// } Driver Code Ends
-// User function Template for C++
 
-class Solution{
-public:
+// } Driver Code Ends
+
+class Solution {
+  public:
     vector<vector<int>> dp;
-    int solve(int arr[],int targetSum,int n)
+    int solve(vector<int> &arr,int targetSum,int n)
     {
         if(targetSum==0||n==0){
             return 0;
@@ -24,9 +23,9 @@ public:
             return dp[n][targetSum]=solve(arr,targetSum,n-1);
         }
     }
-    int equalPartition(int N, int arr[])
-    {
+    bool equalPartition(vector<int>& arr) {
         // code here
+        int N=arr.size();
         int sum=0;
         for(int i=0;i<N;i++) sum+=arr[i];
         int targetSum=sum/2;
@@ -36,23 +35,29 @@ public:
     }
 };
 
+
 //{ Driver Code Starts.
 
-int main(){
+int main() {
     int t;
-    cin>>t;
-    while(t--){
-        int N;
-        cin>>N;
-        int arr[N];
-        for(int i = 0;i < N;i++)
-            cin>>arr[i];
-        
+    cin >> t;
+    cin.ignore();
+    while (t--) {
+        vector<int> arr;
+        string input;
+        getline(cin, input);
+        stringstream ss(input);
+        int number;
+        while (ss >> number) {
+            arr.push_back(number);
+        }
+
         Solution ob;
-        if(ob.equalPartition(N, arr))
-            cout<<"YES\n";
+        if (ob.equalPartition(arr))
+            cout << "true\n";
         else
-            cout<<"NO\n";
+            cout << "false\n";
+        cout << "~" << endl;
     }
     return 0;
 }
