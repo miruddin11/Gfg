@@ -1,16 +1,14 @@
 //{ Driver Code Starts
-// Initial Template for C++
-
 #include <bits/stdc++.h>
 using namespace std;
 
-// } Driver Code Ends
-// User function Template for C++
 
-class Solution{
-public:
+// } Driver Code Ends
+
+class Solution {
+  public:
     int dp[101][101];
-    int solve(int i,int j,int arr[])
+    int solve(int i,int j,vector<int> &arr)
     {
         if(i==j) return 0;
         if(dp[i][j]!=-1) return dp[i][j];
@@ -22,29 +20,38 @@ public:
         }
         return dp[i][j]=ans;
     }
-    int matrixMultiplication(int N, int arr[])
-    {
+    int matrixMultiplication(vector<int> &arr) {
         // code here
+        int N=arr.size();
         memset(dp,-1,sizeof(dp));
         return solve(1,N-1,arr);
     }
 };
 
+
 //{ Driver Code Starts.
 
-int main(){
+int main() {
     int t;
-    cin>>t;
-    while(t--){
-        int N;
-        cin>>N;
-        int arr[N];
-        for(int i = 0;i < N;i++)
-            cin>>arr[i];
-        
-        Solution ob;
-        cout<<ob.matrixMultiplication(N, arr)<<endl;
+    cin >> t;
+    cin.ignore(); // to ignore the newline after the integer input
+    while (t--) {
+        int n;
+        vector<int> a;
+        string input;
+
+        // Input format: first number n followed by the array elements
+        getline(cin, input);
+        stringstream ss(input);
+        int num;
+        while (ss >> num)
+            a.push_back(num);
+
+        Solution obj;
+        cout << obj.matrixMultiplication(a) << endl << "~\n";
     }
+
     return 0;
 }
+
 // } Driver Code Ends
