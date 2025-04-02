@@ -2,60 +2,67 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 // } Driver Code Ends
+
 class Solution {
   public:
-    void DFS(vector<int> adj[],int node,vector<bool> &visited,vector<int> &result)
+    void dfs(int node,vector<vector<int>> &adj,int vis[],vector<int> &ls)
     {
-        visited[node]=true;
-        result.push_back(node);
-        for(auto &nbr:adj[node])
-        {
-            if(!visited[nbr]){
-                DFS(adj,nbr,visited,result);
+        vis[node]=1;
+        ls.push_back(node);
+        for(auto it:adj[node]){
+            if(!vis[it]){
+                dfs(it,adj,vis,ls);
             }
         }
     }
-    // Function to return a list containing the DFS traversal of the graph.
-    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+    vector<int> dfs(vector<vector<int>>& adj) {
         // Code here
-        vector<bool> visited(V,false);
-        vector<int> result;
-        for(int i=0;i<V;i++)
-        {
-            if(!visited[i]){
-                DFS(adj,i,visited,result);
-            }
-        }
-        return result;
+        int V=adj.size();
+        vector<int> ls;
+        int vis[V]={0};
+        int start=0;
+        dfs(start,adj,vis,ls);
+        return ls;
     }
 };
 
+
 //{ Driver Code Starts.
+
 int main() {
     int tc;
     cin >> tc;
+    cin.ignore();
     while (tc--) {
-        int V, E;
-        cin >> V >> E;
+        int V;
+        cin >> V;
+        cin.ignore();
+        vector<vector<int>> adj(
+            V); // Use vector of vectors instead of array of vectors.
 
-        vector<int> adj[V];
-
-        for (int i = 0; i < E; i++) {
-            int u, v;
-            cin >> u >> v;
-            adj[u].push_back(v);
-            adj[v].push_back(u);
+        for (int i = 0; i < V; i++) {
+            string input;
+            getline(cin, input);
+            int num;
+            vector<int> node;
+            stringstream ss(input);
+            while (ss >> num) {
+                node.push_back(num);
+            }
+            adj[i] = node;
         }
-        // string s1;
-        // cin>>s1;
+
         Solution obj;
-        vector<int> ans = obj.dfsOfGraph(V, adj);
+        vector<int> ans = obj.dfs(adj);
         for (int i = 0; i < ans.size(); i++) {
             cout << ans[i] << " ";
         }
         cout << endl;
+        cout << "~" << endl;
     }
     return 0;
 }
+
 // } Driver Code Ends
