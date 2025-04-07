@@ -2,60 +2,71 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 // } Driver Code Ends
+
 class Solution {
   public:
-  bool DFS(vector<int> adj[],int node,vector<bool> &visited,vector<bool> &inRecursion)
-  {
-      visited[node]=true;
-      inRecursion[node]=true;
-      for(auto &nbr:adj[node])
-      {
-          if(visited[nbr]==true && inRecursion[nbr]==true) return true;
-          if(visited[nbr]==false && DFS(adj,nbr,visited,inRecursion)) return true;
-      }
-      inRecursion[node]=false;
-      return false;
-  }
-    // Function to detect cycle in a directed graph.
-    bool isCyclic(int V, vector<int> adj[]) {
+   bool isCycleDFS(unordered_map<int,vector<int>> &adj,int u,vector<bool> &visited,vector<bool> &inRecursion)
+    {
+        visited[u]=true;
+        inRecursion[u]=true;
+        for(auto v:adj[u]){
+            if(!visited[v]&&isCycleDFS(adj,v,visited,inRecursion)){
+                return true;
+            }
+            else if(inRecursion[v]==true){
+                return true;
+            }
+        }
+        inRecursion[u]=false;
+        return false;
+    }
+    bool isCyclic(int V, vector<vector<int>> &edges) {
         // code here
-        vector<bool> visited(V,false);
-        vector<bool> inRecursion(V,false);
+        unordered_map<int,vector<int>> adj;
+        for(auto &vec:edges)
+        {
+            adj[vec[0]].push_back(vec[1]);
+        }
+        vector<bool> visited(V,false),inRecursion(V,false);
         for(int i=0;i<V;i++)
         {
-            if(!visited[i])
-            {
-                if(DFS(adj,i,visited,inRecursion)) return true;
+            if(!visited[i]){
+                if(isCycleDFS(adj,i,visited,inRecursion)){
+                    return true;
+                }
             }
         }
         return false;
     }
 };
 
+
 //{ Driver Code Starts.
 
 int main() {
-
-    int t;
-    cin >> t;
-    while (t--) {
+    int tc;
+    cin >> tc;
+    cin.ignore();
+    while (tc--) {
         int V, E;
         cin >> V >> E;
-
-        vector<int> adj[V];
-
-        for (int i = 0; i < E; i++) {
+        cin.ignore();
+        vector<vector<int>> edges;
+        for (int i = 1; i <= E; i++) {
             int u, v;
             cin >> u >> v;
-            adj[u].push_back(v);
+            edges.push_back({u, v});
         }
 
         Solution obj;
-        cout << obj.isCyclic(V, adj) << "\n";
+        bool ans = obj.isCyclic(V, edges);
+        if (ans)
+            cout << "true\n";
+        else
+            cout << "false\n";
     }
-
     return 0;
 }
-
 // } Driver Code Ends
