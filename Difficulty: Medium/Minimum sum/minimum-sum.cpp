@@ -1,69 +1,53 @@
-//{ Driver Code Starts
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
-// User function template for C++
-
 class Solution {
   public:
     string minSum(vector<int> &arr) {
         // code here
-        sort(arr.begin(),arr.end());
-        int n=arr.size();
-        int carry=0;
-        string sum;
-        for(int i=n-1;i>=0;i-=2)
+        sort(arr.begin(), arr.end());
+        string num1 = "", num2 = "";
+        int i = 0;
+        while(i < arr.size())
         {
-            if(arr[i] == 0)
-             break;
-             
-            else if(i!=0)
+            if(i < arr.size())
             {
-                int x=carry+arr[i]+arr[i-1];
-                carry=x/10;
-                sum+=(x%10)+'0';
-                
+                num1 += '0' + arr[i];
+                i++;
             }
-            else
+            if(i < arr.size())
             {
-                int x=carry+arr[i];
-                carry=x/10;
-                sum+=(x%10)+'0';
-               
+                num2 += '0' + arr[i];
+                i++;
             }
-            
         }
-         if(carry)
-          sum+=carry+'0';
-        reverse(sum.begin(),sum.end());
-        return sum;
+        string sum = "";
+        int i1 = num1.length() - 1, i2 = num2.length() - 1, carry = 0;
+        while(i1 >= 0 || i2 >= 0 || carry > 0)
+        {
+            int n1 = 0, n2 = 0;
+            if(i1 >= 0)
+            {
+                n1 = num1[i1] - '0';
+                i1--;
+            }
+            if(i2 >= 0)
+            {
+                n2 = num2[i2] - '0';
+                i2--;
+            }
+            int currSum = n1 + n2 + carry;
+            carry = currSum / 10;
+            int curr = currSum % 10;
+            sum += '0' + curr;
+        }
+        reverse(sum.begin(), sum.end());
+        int ind = 0;
+        for(int i = 0; i < sum.length(); i++)
+        {
+            if(sum[i] != '0')
+            {
+                break;
+            }
+            ind++;
+        }
+        return sum.substr(ind);
     }
 };
-
-//{ Driver Code Starts.
-
-int main() {
-    int t;
-    cin >> t;
-    cin.ignore();
-    while (t--) {
-        vector<int> a;
-        string input;
-        getline(cin, input);
-        stringstream ss(input);
-        int number;
-        while (ss >> number) {
-            a.push_back(number);
-        }
-
-        Solution ob;
-        string ans = ob.minSum(a);
-        cout << ans << endl;
-        cout << "~" << endl;
-    }
-    return 0;
-}
-
-// } Driver Code Ends
